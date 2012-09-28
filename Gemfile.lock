@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vestal_versions (1.2.2)
+    vestal_versions (1.2.4.3)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
 
@@ -41,8 +41,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (>= 3.0.0)
-  activesupport (>= 3.0.0)
   rcov
   rspec
   simplecov

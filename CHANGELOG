@@ -1,4 +1,19 @@
 HEAD
+* Don't create versions for records not in the database to avoid the "parent not saved" error
+* Added global configuration option to use another for the number column in versions table
+  "number" is a reserved word in oracle and cannot be used as a column name or table. 
+  Default is still number, since it works fine in most other databases
+* Added an option in versioned to specify version change comments as being 
+  :update_comments => <:none|:optional|:required>
+
+  :none will not record a reason for update even it's given.  
+  :optional will record your reason for update if one is provided
+  :required requires you to provide a reason for updating or record will be valid
+    and an exception will be thrown if you skip validation.
+
+  Note: this validation for reason_for_update to be present is skipped when
+  we create a new version and the initial_version flag is turned off. 
+
 * Added a new class level 'skip_version' that works on one model at
 a time
 * Internal refactoring and tidying up by Alex Crichton

@@ -23,17 +23,23 @@ module VestalVersions
       end
     end
 
-    module InstanceMethods
-      private
+    private
 
-        def delete_version?
-          vestal_versions_options[:track_destroy]
+      def delete_version?
+        vestal_versions_options[:track_destroy]
+      end
+
+      def create_destroyed_version
+        # only for percisisted records
+        if self.persisted? 
+          create_version({
+              :modifications => attributes, 
+              :number        => last_version + 1, 
+              :tag           => 'deleted',
+              :reason_for_update => self.reason_for_update, 
+              :commit_label      => self.commit_label, 
+              :user              => self.updated_by})
         end
-
-        def create_destroyed_version
-          create_version({:modifications => attributes, :number => last_version + 1, :tag => 'deleted'})
-        end
-
-    end
+      end
   end
 end

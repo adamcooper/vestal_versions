@@ -7,6 +7,11 @@ module VestalVersions
     include Comparable
     include ActiveSupport::Configurable
 
+    def self.number_column_name
+      column_name = VestalVersions.config.number_column_name
+      column_name.blank? ? "number" : column_name
+    end
+
     # Associate polymorphically with the parent record.
     belongs_to :versioned, :polymorphic => true
 
@@ -33,6 +38,15 @@ module VestalVersions
       number == 1
     end
     
+    def number
+      self[VestalVersions::Version.number_column_name.to_sym]
+    end
+    
+    def number=(value)
+      self[VestalVersions::Version.number_column_name.to_sym] = value
+    end
+
+
     # Returns the original version number that this version was.
     def original_number
       if reverted_from.nil?

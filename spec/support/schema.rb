@@ -15,10 +15,13 @@ class CreateSchema < ActiveRecord::Migration
       t.belongs_to :versioned, :polymorphic => true
       t.belongs_to :user, :polymorphic => true
       t.string :user_name
+      t.string :reason_for_update
       t.text :modifications
       t.integer :number
+      t.integer :elnumero
       t.integer :reverted_from
       t.string :tag
+      t.string :commit_label
       t.timestamps
     end
   end

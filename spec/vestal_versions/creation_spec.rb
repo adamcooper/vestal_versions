@@ -85,6 +85,13 @@ describe VestalVersions::Creation do
       User.prepare_versioned_options(:initial_version => true)
       subject.versions.first.number.should == 1
     end
+
+    it 'shortcut to version 1 without querying database' do
+      User.prepare_versioned_options(:initial_version => true)
+      
+      u = User.create(:name => "Smithers")
+      u.versions.first.number.should == 1
+    end
   end
 
 end

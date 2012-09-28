@@ -21,14 +21,16 @@ module VestalVersions
         options.symbolize_keys!
         options.reverse_merge!(VestalVersions.config)
         options.reverse_merge!(
-          :class_name => 'VestalVersions::Version',
-          :dependent => :delete_all
+          :class_name        => 'VestalVersions::Version',
+          :dependent         => :delete_all
         )
+        # global configuration only
+        options.delete(:number_column_name)
         # options.reverse_merge!(
         #   :order => "#{options[:class_name].constantize.table_name}.#{connection.quote_column_name('number')} ASC"
         # )
 
-        class_inheritable_accessor :vestal_versions_options
+        class_attribute :vestal_versions_options
         self.vestal_versions_options = options.dup
 
         options.merge!(

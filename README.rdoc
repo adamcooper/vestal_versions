@@ -10,17 +10,20 @@ And that's just what <tt>vestal_versions</tt> does. Not only can a model be reve
 
 == Compatibility
 
-Tested with Active Record 3.0.3 with Ruby 1.8.7 and 1.9.2.
+Tested with Active Record 3.1.6 with Ruby 1.8.7 and 1.9.3.
 
 == Installation
 
 In the Gemfile:
 
-  gem 'vestal_versions', :git => 'git://github.com/adamcooper/vestal_versions'
+  gem 'vestal_versions', :git => 'git://github.com/elzoiddy/vestal_versions'
 
 Next, generate and run the first and last versioning migration you'll ever need:
 
   $ rails generate vestal_versions:migration
+  
+Check out the migration and see if you want to turn on the reason for update field
+
   $ rake db:migrate
 
 == Example
@@ -71,6 +74,23 @@ It's that easy! Now watch it in action...
   => "Stephen Richert"
   >> u.version
   => 5
+  >> u.update_attribute(:last_name, "Yobs", :reason_for_update => "some good reason or another")
+  => true
+  >> u.versions.last.reason_for_update
+  => "some good reason or another"
+
+== Oracle Support
+
+In Oracle, the keyword "number" is reserved for column names.  So you need to configure another name for the
+number column in vestal_versions table.
+
+Use the vestal_versions Rails generator to generate a new initializer or just simply add this to your existing initializer.
+
+  VestalVersions.configure do |config|
+    config.number_column_name = "version_number"
+  end
+
+Make sure you also have this new column name (version_number in this case) in your schema, so vestal_versions should be using this column to store the version number.
 
 == Upgrading to 1.0
 

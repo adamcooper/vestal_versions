@@ -42,6 +42,8 @@ module VestalVersions
   autoload :Reset
   autoload :Reversion
   autoload :Users
+  autoload :Comments
+  autoload :CommitLabel
   autoload :Version
   autoload :VERSION, 'vestal_versions/version_num'
   autoload :VersionTagging
@@ -109,6 +111,8 @@ module VestalVersions
       include Changes
       include Creation
       include Users
+      include Comments
+      include CommitLabel
       include Reversion
       include Reset
       include Conditions
