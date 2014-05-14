@@ -16,6 +16,15 @@ describe VestalVersions::Creation do
       its('versions.count'){ should == 1 }
     end
 
+    context "with :initial_version and false conditional options" do
+      before do
+        User.prepare_versioned_options(:initial_version => true,
+                                       :if              => Proc.new { false })
+      end
+
+      its('versions.count'){ should == 0 }
+    end
+
     it 'does not increase when no changes are made in an update' do
       expect {
         subject.update_attribute(:name, name)

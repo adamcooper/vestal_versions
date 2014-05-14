@@ -31,7 +31,8 @@ module VestalVersions
       private
         # Returns whether an initial version should be created upon creation of the parent record.
         def create_initial_version?
-          vestal_versions_options[:initial_version] == true
+          vestal_versions_options[:initial_version] == true &&
+            version_conditions_met?
         end
 
         # Creates an initial version upon creation of the parent record.

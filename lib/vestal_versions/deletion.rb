@@ -27,7 +27,8 @@ module VestalVersions
       private
 
         def delete_version?
-          vestal_versions_options[:track_destroy]
+          vestal_versions_options[:track_destroy] &&
+            version_conditions_met?
         end
 
         def create_destroyed_version

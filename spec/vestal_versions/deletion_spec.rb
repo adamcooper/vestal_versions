@@ -25,6 +25,26 @@ describe VestalVersions::Deletion do
       VestalVersions::Version.last.tag.should == 'deleted'
     end
 
+    context "when conditions aren't met" do
+      before do
+        DeletedUser.prepare_versioned_options(:dependent => :tracking,
+                                              :if => Proc.new { false })
+      end
+
+      after do
+        DeletedUser.prepare_versioned_options(:dependent => :tracking)
+      end
+
+      it "removes the original record" do
+        subject.destroy
+
+        DeletedUser.find_by_id(subject.id).should be_nil
+      end
+
+      it "doesn't create a version" do
+        expect{ subject.destroy }.to_not change{ VestalVersions::Version.count }
+      end
+    end
   end
 
   context "deleted versions" do
